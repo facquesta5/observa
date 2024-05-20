@@ -1,0 +1,29 @@
+projeto_oo/
+┣ classes/
+┃ ┣ Carro.php
+┃ ┣ Database.php
+┃ ┗ Usuario.php
+┣ functions/
+┃ ┗ helpers.php
+┣ public/
+┃ ┣ css/
+┃ ┣ images/
+┃ ┗ js/
+┣ vendor/
+┃ ┣ composer/
+┃ ┃ ┣ autoload_classmap.php
+┃ ┃ ┣ autoload_namespaces.php
+┃ ┃ ┣ autoload_psr4.php
+┃ ┃ ┣ autoload_real.php
+┃ ┃ ┣ autoload_static.php
+┃ ┃ ┣ ClassLoader.php
+┃ ┃ ┗ LICENSE
+┃ ┗ autoload.php
+┣ views/
+┃ ┣ footer.php
+┃ ┗ header.php
+┣ composer.json
+┣ file_tree.txt
+┣index.php
+┣usuario_cadastrar.php
+┗retorno_cadastrar.php

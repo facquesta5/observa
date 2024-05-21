@@ -3,7 +3,7 @@
 
 
 require 'vendor/autoload.php';
-
+use App\Database;
 $db = App\Database::getInstance();
 
 // $db = Database::getInstance();

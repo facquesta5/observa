@@ -1,15 +1,7 @@
 <?php
-// require_once 'config/Database.php';
-
-
 require 'vendor/autoload.php';
-use App\Database;
 $db = App\Database::getInstance();
-
-// $db = Database::getInstance();
-
 $db->query("SELECT * FROM carros");
-
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -21,6 +13,7 @@ $db->query("SELECT * FROM carros");
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <?php include 'navbar.php'; ?>
     <div class="container mt-5">
         <h2>Carros Disponíveis</h2>
         <table class="table">
@@ -50,9 +43,8 @@ $db->query("SELECT * FROM carros");
             </tbody>
         </table>
     </div>
-
     <!-- Inclua o JS do Bootstrap -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
 </body>
 </html>
 

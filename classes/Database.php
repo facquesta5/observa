@@ -1,57 +1,40 @@
 <?php
 namespace App;
+
+use PDO;
+use PDOException;
 class Database {
     private static $instance = null;
-    private $pdo, $query, $error = false, $results, $count = 0;
+    private $pdo;
+    private $error;
 
     private function __construct() {
         try {
-            $this->pdo = new \PDO('mysql:host=localhost;dbname=projeto_oo', 'root', '');
-        } catch(\PDOException $e) {
-            die($e->getMessage());
+            $this->pdo = new PDO('mysql:host=localhost;dbname=projeto_oo', 'root', '');
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            $this->error = $e->getMessage();
         }
     }
 
     public static function getInstance() {
-        if (!isset(self::$instance)) {
+        if (self::$instance == null) {
             self::$instance = new Database();
         }
         return self::$instance;
     }
 
-    // Método para executar queries
-    public function query($sql, $params = array()) {
-        $this->error = false;
-        if ($this->query = $this->pdo->prepare($sql)) {
-            $x = 1;
-            if (count($params)) {
-                foreach ($params as $param) {
-                    $this->query->bindValue($x, $param);
-                    $x++;
-                }
-            }
-
-            if ($this->query->execute()) {
-                $this->results = $this->query->fetchAll(\PDO::FETCH_OBJ);
-                $this->count = $this->query->rowCount();
-            } else {
-                $this->error = true;
-            }
+    public function query($sql, $params = []) {
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->error = $e->getMessage();
+            return [];
         }
-
-        return $this;
     }
 
-    // Métodos para buscar resultados e contar linhas
-    public function results() {
-        return $this->results;
-    }
-
-    public function count() {
-        return $this->count;
-    }
-
-    // Método para verificar se houve erro na query
     public function error() {
         return $this->error;
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Maio-2024 às 21:46
+-- Tempo de geração: 23-Maio-2024 às 23:11
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 7.2.5
 
@@ -61,6 +61,26 @@ CREATE TABLE `sessoes` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tipos_usuarios`
+--
+
+CREATE TABLE `tipos_usuarios` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `tipos_usuarios`
+--
+
+INSERT INTO `tipos_usuarios` (`id`, `tipo`) VALUES
+(1, 'Administrador'),
+(2, 'Sócio'),
+(3, 'Operador');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuarios`
 --
 
@@ -69,23 +89,24 @@ CREATE TABLE `usuarios` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp(),
+  `tipo_usuario_id` int(11) NOT NULL DEFAULT 3
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `criado_em`) VALUES
-(1, 'Fernando Queiroz Acquesta', 'facquesta5@hotmail.com', '$2y$10$t1Cf7FVfhcoMKIAxLPQnvOkFmSbRSxs9JW/.rRvVEG.rY.eALgcj.', '2024-05-14 14:12:52'),
-(2, 'Romer Simpsons', 'romer.simpsons@hotmail.com', '$2y$10$SsSv4Zsg8w5dLwu0fRYgN.JbuXHGQ/ludUEIf4DXVWWhh9YbMOLfm', '2024-05-14 14:13:47'),
-(3, 'geronimo', 'gera@gmail.com', '$2y$10$fKxT7dIhOQMxnKeXYLZEcecXxjZkt4P1U7K6WSEgst1LzrsrPJiBq', '2024-05-14 16:00:19'),
-(4, 'geronimo', 'g@gmail.com', '$2y$10$bZ6hmcvSSqM2R3KNwEWMV.vCHkVUVjpZr4UeNG5O3CTZFkdPLkpVi', '2024-05-14 16:00:32'),
-(5, 'OnlinePoket', 'online@gmail.com', '$2y$10$DORikxUWkAeUYcmmm5H/7OyZNz4cG03KF0ZSq11HLD4Z4THrz.WUC', '2024-05-14 16:05:33'),
-(7, 'Giovana', 'gi@hotmail.com', '$2y$10$ajCtTHxHF1sRmtkZ7XvbROZQc/fUJwcXXIlB2iFWIVdKXFOHdpC9q', '2024-05-14 16:08:06'),
-(10, 'Otavio', 'otavio@gmail.com', '$2y$10$g3IdnvP335tn1cBmHQI.juFoKIKxZci2t9vpc0D7FnGLgwBQDBTAy', '2024-05-14 16:13:35'),
-(15, 'RODOX', 'rodolfinho@gmail.cpom', '$2y$10$99hFOkV0Cavf.lAYsKlcn./LwYo.K6NH60fcojSldB5SixGw41NDS', '2024-05-20 19:48:34'),
-(16, 'Juninho Play', 'juninho@gmail.com', '$2y$10$jpH/y0.ccvGC7OF26R9gDOn3hcEDs/8c7k1jFlcy1/INE1uHKUjdG', '2024-05-20 20:00:07');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `criado_em`, `tipo_usuario_id`) VALUES
+(1, 'Fernando Queiroz Acquesta', 'facquesta5@hotmail.com', '$2y$10$t1Cf7FVfhcoMKIAxLPQnvOkFmSbRSxs9JW/.rRvVEG.rY.eALgcj.', '2024-05-14 14:12:52', 2),
+(2, 'Romer Simpsons', 'romer.simpsons@hotmail.com', '$2y$10$SsSv4Zsg8w5dLwu0fRYgN.JbuXHGQ/ludUEIf4DXVWWhh9YbMOLfm', '2024-05-14 14:13:47', 3),
+(3, 'geronimo', 'gera@gmail.com', '$2y$10$fKxT7dIhOQMxnKeXYLZEcecXxjZkt4P1U7K6WSEgst1LzrsrPJiBq', '2024-05-14 16:00:19', 3),
+(4, 'geronimo', 'g@gmail.com', '$2y$10$bZ6hmcvSSqM2R3KNwEWMV.vCHkVUVjpZr4UeNG5O3CTZFkdPLkpVi', '2024-05-14 16:00:32', 3),
+(5, 'OnlinePoket', 'online@gmail.com', '$2y$10$DORikxUWkAeUYcmmm5H/7OyZNz4cG03KF0ZSq11HLD4Z4THrz.WUC', '2024-05-14 16:05:33', 3),
+(7, 'Giovana', 'gi@hotmail.com', '$2y$10$ajCtTHxHF1sRmtkZ7XvbROZQc/fUJwcXXIlB2iFWIVdKXFOHdpC9q', '2024-05-14 16:08:06', 3),
+(10, 'Otavio', 'otavio@gmail.com', '$2y$10$g3IdnvP335tn1cBmHQI.juFoKIKxZci2t9vpc0D7FnGLgwBQDBTAy', '2024-05-14 16:13:35', 3),
+(15, 'RODOX', 'rodolfinho@gmail.cpom', '$2y$10$99hFOkV0Cavf.lAYsKlcn./LwYo.K6NH60fcojSldB5SixGw41NDS', '2024-05-20 19:48:34', 3),
+(16, 'Juninho Play', 'juninho@gmail.com', '$2y$10$jpH/y0.ccvGC7OF26R9gDOn3hcEDs/8c7k1jFlcy1/INE1uHKUjdG', '2024-05-20 20:00:07', 3);
 
 --
 -- Índices para tabelas despejadas
@@ -105,11 +126,18 @@ ALTER TABLE `sessoes`
   ADD KEY `usuario_id` (`usuario_id`);
 
 --
+-- Índices para tabela `tipos_usuarios`
+--
+ALTER TABLE `tipos_usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `usuarios_ibfk_1` (`tipo_usuario_id`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -128,6 +156,12 @@ ALTER TABLE `sessoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tipos_usuarios`
+--
+ALTER TABLE `tipos_usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -142,6 +176,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `sessoes`
   ADD CONSTRAINT `sessoes_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Limitadores para a tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`tipo_usuario_id`) REFERENCES `tipos_usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

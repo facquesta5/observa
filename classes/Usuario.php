@@ -15,7 +15,7 @@ class Usuario {
         }
 
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-        $this->db->query("INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)", [$nome, $email, $senhaHash]);
+        $this->db->query("INSERT INTO usuarios (nome, email, senha, tipo_usuario_id) VALUES (?, ?, ?, ?)", [$nome, $email, $senhaHash, 2]);
 
         if ($this->db->error()) {
             return 'Houve um erro ao cadastrar o usuário.';
@@ -43,5 +43,35 @@ class Usuario {
             return false;
         }
     }
+    function checkOperador(){
+        session_start();
+        if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 3) {
+            header('Location: login.php');
+            exit();
+        }
+    }
+    function checkSocio(){
+        if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 2) {
+            header('Location: login.php');
+            exit();
+        }
+
+    }
+    function checkAdmin(){
+        session_start();
+        if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 1) {
+            header('Location: ../../login.php');
+            exit();
+        }
+    }
+
+    public function logout(){
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: login.php');
+        exit();
+    }
+
 }
 ?>

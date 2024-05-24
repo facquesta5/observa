@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 use App\Usuario;
 
 header('Content-Type: application/json');
@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $input['nome'];
     $email = $input['email'];
     $senha = $input['senha'];
+
 
     // Faça algo com os dados aqui, como inseri-los em um banco de dados
     $usuario = new Usuario();

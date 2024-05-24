@@ -1,9 +1,7 @@
-<?php 
-session_start();
-if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 3) {
-    header('Location: login.php');
-    exit();
-}
+<?php
+require 'session.php';
+checkLogin();
+checkAdmin();
 ?>
 <html lang="pt">
 <head>
@@ -14,9 +12,9 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 3) {
 </head>
 <body>
 
-    <?php include 'navbar.php'; ?>
+    <?php include '../navbar.php'; ?>
     <div class="container mt-5">
-            <p>Você é um Operador.</p>
+            <p>Você é um Administrador.</p>
     </div>
 </body>
 </html>

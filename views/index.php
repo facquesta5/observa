@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 $db = App\Database::getInstance();
 $db->query("SELECT * FROM carros");
 ?>
@@ -44,7 +44,6 @@ $db->query("SELECT * FROM carros");
         </table>
     </div>
     <!-- Inclua o JS do Bootstrap -->
-    
+
 </body>
 </html>
-

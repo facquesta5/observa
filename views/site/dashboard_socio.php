@@ -1,9 +1,10 @@
-<?php 
-session_start();
-if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 1) {
-    header('Location: login.php');
-    exit();
-}
+<?php
+require '../../vendor/autoload.php';
+require '../session.php';
+use App\Usuario;
+$usuarioObj = new Usuario();
+$usuarioObj->checkSocio();
+checkLogin();
 ?>
 <html lang="pt">
 <head>
@@ -14,9 +15,9 @@ if (!isset($_SESSION['usuario_id']) || $_SESSION['tipo_usuario_id'] != 1) {
 </head>
 <body>
 
-    <?php include 'navbar.php'; ?>
+    <?php include '../navbar.php'; ?>
     <div class="container mt-5">
-            <p>Você é um Administrador.</p>
+            <p>Você é um Socio.</p>
     </div>
 </body>
 </html>

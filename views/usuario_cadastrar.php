@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 ?>
 
@@ -41,7 +41,7 @@ require 'vendor/autoload.php';
         </div>
     </div>
 
-    
+
     <script>
         new Vue({
             el: '#app',

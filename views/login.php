@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use App\Usuario;
 
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $usuarioObj = new Usuario();
     $usuario = $usuarioObj->login($email, $senha);
-
+    echo $usuario['tipo_usuario_id'];
     if ($usuario) {
         session_start();
         $_SESSION['usuario_id'] = $usuario['id'];
@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Redirecionar com base no tipo de usuário
         switch ($usuario['tipo_usuario_id']) {
             case 1:  // Administrador
-                header('Location: dashboard_admin.php');
+                header('Location: views/admin/dashboard_admin.php');
                 break;
             case 2:  // Sócio
-                header('Location: dashboard_socio.php');
+                header('Location: site/dashboard_socio.php');
                 break;
             case 3:  // Operador
                 header('Location: dashboard_operador.php');

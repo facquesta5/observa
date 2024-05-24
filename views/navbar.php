@@ -28,9 +28,6 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
             <?php if (isset($_SESSION['usuario_id'])): ?>
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">Dashboard</a>
-                </li>
                 <?php if ($_SESSION['tipo_usuario_id'] == 1): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="admin_dashboard.php">Admin</a>

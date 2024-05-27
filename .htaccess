@@ -1,0 +1,7 @@
+# Habilita a reescrita de URLs
+RewriteEngine On
+
+# Reescreve URLs para usar index.php como front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /basic-php_oo-vue/views/404.php [QSA,L]

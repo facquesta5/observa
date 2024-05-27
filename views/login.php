@@ -1,8 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-
 use App\Usuario;
-
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,16 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $usuarioObj = new Usuario();
     $usuario = $usuarioObj->login($email, $senha);
-    echo $usuario['tipo_usuario_id'];
     if ($usuario) {
         session_start();
+        $_SESSION['nome'] = $usuario['nome'];
+        $_SESSION['tipo'] = $usuario['tipo'];
         $_SESSION['usuario_id'] = $usuario['id'];
         $_SESSION['tipo_usuario_id'] = $usuario['tipo_usuario_id'];
 
         // Redirecionar com base no tipo de usuário
         switch ($usuario['tipo_usuario_id']) {
             case 1:  // Administrador
-                header('Location: views/admin/dashboard_admin.php');
+                header('Location: admin/dashboard_admin.php');
                 break;
             case 2:  // Sócio
                 header('Location: site/dashboard_socio.php');
@@ -41,16 +40,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-<?php include 'navbar.php'; ?>
-    <div class="container mt-5">
+    <?php include 'navbar.php'; ?>
+    <!-- Breadcrumb -->
+    <div class="container mt-2">
+        <?php echo $breadcrumb; ?>
+    </div>
+    <div class="container mt-2">
         <h2>Login</h2>
-        <?php if ($error): ?>
+        <?php if ($error) : ?>
             <div class="alert alert-danger"><?= $error ?></div>
         <?php endif; ?>
         <form method="POST">
@@ -66,4 +71,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </body>
+
 </html>

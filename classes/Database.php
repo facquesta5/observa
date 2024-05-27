@@ -38,4 +38,6 @@ class Database {
     public function error() {
         return $this->error;
     }
+
+    
 }

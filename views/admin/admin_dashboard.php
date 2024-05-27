@@ -1,6 +1,5 @@
 <?php
 require 'session.php';
-checkLogin();
 checkAdmin();
 
 ?>
@@ -14,7 +13,7 @@ checkAdmin();
 </head>
 <body>
     <?php include 'navbar.php'; ?>
-    <div class="container mt-5">
+    <div class="container mt-2">
         <h2>Painel do Administrador</h2>
         <p>Aqui você pode gerenciar o sistema.</p>
     </div>

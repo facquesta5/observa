@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 function checkLogin() {
     if (!isset($_SESSION['usuario_id'])) {
         header('Location: login.php');

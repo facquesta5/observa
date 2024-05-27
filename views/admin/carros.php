@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -18,14 +18,44 @@ require '../vendor/autoload.php';
 </head>
 
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include '../navbar.php'; ?>
     <!-- Breadcrumb -->
     <div class="container mt-2">
         <?php echo $breadcrumb; ?>
     </div>
     <div id="app" class="container mt-2">
-        
-            
+        <div class="row" style="justify-content: space-between;align-items: baseline;margin-right: 0px;
+            margin-left: 0px;">
+            <h2 style="width: fit-content;">Carros</h2>
+            <a href="#" class="btn btn-primary mb-2">Cadastrar Carro</a>
+        </div>
+        <table class="table" v-if="carros.length">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Preço</th>
+                    <th>Disponível</th>
+                    <th>Criado Em</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="carro in carros" :key="carro.id">
+                    <td>{{ carro.id }}</td>
+                    <td>{{ carro.marca }}</td>
+                    <td>{{ carro.modelo }}</td>
+                    <td>{{ carro.ano }}</td>
+                    <td>R$ {{ formatarPreco(carro.preco) }}</td>
+                    <td>{{ carro.disponivel ? 'Sim' : 'Não' }}</td>
+                    <td>{{ carro.criado_em }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div v-else>
+            <p>Nenhum carro disponível no momento.</p>
+        </div>
     </div>
     <!-- Inclua o JS do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -38,7 +68,7 @@ require '../vendor/autoload.php';
             },
             methods: {
                 carregarCarros: function() {
-                    axios.get('admin/retorno_carros_listar.php')
+                    axios.get('retorno_carros_listar.php')
                         .then(response => {
                             this.carros = response.data;
                             console.log(this.carros);

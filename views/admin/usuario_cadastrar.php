@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php';
+require '../../vendor/autoload.php';
 
 ?>
 
@@ -14,9 +14,13 @@ require '../vendor/autoload.php';
 </head>
 
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include '../navbar.php'; ?>
+    <!-- Breadcrumb -->
+    <div class="container mt-2">
+        <?php echo $breadcrumb; ?>
+    </div>
     <div id="app">
-        <div class="container mt-5">
+        <div class="container mt-2">
             <h2>Cadastro de Usuário</h2>
             <form method="POST" @submit="checkPassword">
                 <div class="form-group">

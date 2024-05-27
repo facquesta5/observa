@@ -4,7 +4,6 @@ require '../session.php';
 use App\Usuario;
 $usuarioObj = new Usuario();
 $usuarioObj->checkSocio();
-checkLogin();
 ?>
 <html lang="pt">
 <head>
@@ -16,7 +15,7 @@ checkLogin();
 <body>
 
     <?php include '../navbar.php'; ?>
-    <div class="container mt-5">
+    <div class="container">
             <p>Você é um Socio.</p>
     </div>
 </body>

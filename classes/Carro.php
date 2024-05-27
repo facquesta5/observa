@@ -1,24 +1,15 @@
 <?php
+namespace App;
 class Carro {
-    private $marca;
-    private $modelo;
-    private $ano;
+    protected $db;
 
-    public function __construct($marca, $modelo, $ano) {
-        $this->marca = $marca;
-        $this->modelo = $modelo;
-        $this->ano = $ano;
+    public function __construct() {
+        $this->db = Database::getInstance();
     }
 
-    // Métodos getters e setters
-    public function getMarca() {
-        return $this->marca;
+    public function listar() {
+       return $this->db->query("SELECT * FROM carros");
     }
 
-    public function setMarca($marca) {
-        $this->marca = $marca;
-    }
-
-    // Adicione os outros métodos necessários
 }
 ?>

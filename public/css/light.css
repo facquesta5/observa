@@ -1,0 +1,27 @@
+body {
+    background-color: #fff !important;
+}
+
+.destination-item {
+}
+.destination-item h5{
+    color: #202020;
+}
+.destination-info {
+    color: #d4d4d4;
+    background-color: #000000;
+    z-index: 9999; /* Ensure it's above all other content */
+}
+
+
+footer {
+    background-color: #3F51B5;
+}
+
+footer .social-icons a{
+    color: #fff;
+}
+
+footer .social-icons a:hover {
+    color: #23527c;
+}

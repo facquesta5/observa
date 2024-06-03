@@ -1,14 +1,16 @@
-projeto_oo/
+basic-php_oo-vue/
 ┣ classes/
+┃ ┣ Base.php
 ┃ ┣ Carro.php
 ┃ ┣ Database.php
 ┃ ┗ Usuario.php
 ┣ functions/
 ┃ ┗ helpers.php
 ┣ public/
-┃ ┣ css/
-┃ ┣ images/
-┃ ┗ js/
+┃ ┗ css/
+┃   ┣ dark.css
+┃   ┣ light.css
+┃   ┗ style.css
 ┣ vendor/
 ┃ ┣ composer/
 ┃ ┃ ┣ autoload_classmap.php
@@ -20,10 +22,26 @@ projeto_oo/
 ┃ ┃ ┗ LICENSE
 ┃ ┗ autoload.php
 ┣ views/
+┃ ┣ admin/
+┃ ┃ ┣ admin_dashboard.php
+┃ ┃ ┣ carros.php
+┃ ┃ ┣ dashboard_admin.php
+┃ ┃ ┣ retorno_cadastrar.php
+┃ ┃ ┣ retorno_carros_listar.php
+┃ ┃ ┣ usuarios.php
+┃ ┃ ┗ usuario_cadastrar.php
+┃ ┣ site/
+┃ ┃ ┗ dashboard_socio.php
+┃ ┣ 404.php
 ┃ ┣ footer.php
-┃ ┗ header.php
+┃ ┣ header.php
+┃ ┣ index.php
+┃ ┣ login.php
+┃ ┣ logout.php
+┃ ┣ navbar.php
+┃ ┗ session.php
+┣ .htaccess
 ┣ composer.json
 ┣ file_tree.txt
-┣index.php
-┣usuario_cadastrar.php
-┗retorno_cadastrar.php
+┣ projeto_oo.sql
+┗ README.md

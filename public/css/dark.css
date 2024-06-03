@@ -1,0 +1,41 @@
+body{
+    background-color: #1c1c1e !important;
+    color: #cbcbcb !important;
+}
+table, tr, th, td{
+    border-color: #494040 !important;
+    color: #cbcbcb;
+}
+input[type="email"], 
+input[type="text"], 
+input[type="password"] {
+  background-color: #333;
+  color: #fff;
+  border: #494040;
+}
+
+input[type="email"]:focus,
+input[type="text"]:focus, 
+input[type="password"]:focus {
+  outline: none;
+  background-color: #333;
+  box-shadow: 0 0 10px #fff;
+}
+input:-internal-autofill-selected {
+  background-color: #333 !important;
+}
+.page-link {
+  background-color:  #333;
+  border-color: #007bff;
+}
+.page-link:hover {
+  background-color:  #242424;
+  border-color: #007bff;
+}
+.breadcrumb, .navbar, .navbar ul li a, .navbar .navbar-brand {
+  background-color: #222225 !important;
+  color: #cbcbcb !important;
+}
+footer {
+    background-color: #222;
+}

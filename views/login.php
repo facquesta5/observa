@@ -41,21 +41,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php include 'navbar.php'; ?>
-<div class="container mt-2">
-    <h2>Login</h2>
+    
     <?php if ($error) : ?>
         <div class="alert alert-danger"><?= $error ?></div>
     <?php endif; ?>
-    <form method="POST">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+    <div class="d-flex justify-content-center">
+        <div class="login-form-wrapper">
+        <h2>Login</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="senha">Senha</label>
-            <input type="password" class="form-control" id="senha" name="senha" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-</div>
+    </div>
 <?php include 'footer.php'; ?>
+
+<style>
+    .login-form-wrapper {
+        width: 100%;
+        max-width: 400px; /* Largura máxima */
+        padding: 15px;
+        margin: auto;
+    }
+</style>

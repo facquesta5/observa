@@ -24,10 +24,6 @@ class Usuario
         $this->db->query("INSERT INTO usuarios (nome, email, senha, tipo_usuario_id) 
         VALUES (?, ?, ?, ?)", [$nome, $email, $senhaHash, 2]);
 
-        if ($this->db->error()) {
-            return 'Houve um erro ao cadastrar o usuário.';
-        }
-
         return 'Usuário cadastrado com sucesso.';
     }
 

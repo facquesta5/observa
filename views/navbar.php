@@ -145,7 +145,7 @@ $breadcrumb = generateBreadcrumb($baseUrl);
                     <li class="nav-item" style="border-right: solid 1px #00000080;">
                         <a class="nav-link" style="cursor: auto;"><?php echo $_SESSION['nome'] . ': ' . $_SESSION['tipo']; ?></a>
                     </li>
-                    <?php if ($_SESSION['tipo_usuario_id'] == 1) : ?>
+                    <?php if ($_SESSION['tipo_usuario_id'] == 1 || $_SESSION['tipo_usuario_id'] == 2)  : ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo $baseUrl ?>/views/logout.php">Logout</a>
                         </li>

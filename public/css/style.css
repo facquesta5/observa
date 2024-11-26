@@ -1,3 +1,28 @@
+.main-menu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menu-esquerda {
+    justify-content: flex-start;
+}
+
+.menu-direita {
+    justify-content: flex-end;
+}
+.login-form-wrapper {
+    width: 100%;
+    max-width: 400px; /* Largura máxima */
+    padding: 15px;
+    margin: auto;
+}
 .table td, .table th {
     padding: .25rem !important;
+}
+
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 1366px;
+    }
 }

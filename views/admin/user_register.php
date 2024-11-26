@@ -7,7 +7,7 @@ require '../../vendor/autoload.php';
 <?php include '../navbar.php'; ?>
 <div class="container mt-2">
     <h2>Cadastro de Usuário</h2>
-    <form method="POST" @submit="checkPassword">
+    <form method="POST" @submit="validatePasswords">
         <div class="form-group">
             <label for="nome">Nome</label>
             <input type="text" class="form-control" id="nome" name="nome" v-model="nome" required>
@@ -41,24 +41,24 @@ require '../../vendor/autoload.php';
             confirmar_senha: ''
         },
         methods: {
-            checkPassword: function(event) {
+            validatePasswords: function(event) {
                 event.preventDefault();
                 if (this.senha !== this.confirmar_senha) {
                     alert('As senhas não coincidem!');
                 } else {
-                    this.cadastrarUsuario();
+                    this.submitUserRegistration();
                 }
             },
-            cadastrarUsuario: function() {
+            submitUserRegistration: function() {
                 const userData = {
                     nome: this.nome,
                     email: this.email,
                     senha: this.senha
                 };
 
-                axios.post('retorno_cadastrar.php', userData)
+                axios.post('user_register_handler.php', userData)
                     .then((response) => {
-                        console.log('Server response:', response.data);
+                        console.log('Server response:', response);
 
                         if (response.data.mensagem === 'Usuário cadastrado com sucesso.') {
                             this.nome = '';

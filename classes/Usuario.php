@@ -5,13 +5,83 @@ namespace App;
 use PDO;
 use PDOException;
 
-class Usuario
+ class Usuario extends Database
 {
-    protected $db;
+    private $conn;
 
-    public function __construct()
+    public function __construct() {
+        $this->conn = Database::getInstance()->getConnection();
+    }
+
+    public function login($email, $senha) {
+        
+        if (empty($email) || empty($senha)) {
+            return 'Por favor, preencha todos os campos.';
+        }
+
+        try {
+            // Preparando a consulta com placeholders
+            $query = "
+                SELECT 
+                    u.id, u.senha, u.tipo_usuario_id, u.nome, tu.tipo 
+                FROM 
+                    usuarios u
+                LEFT JOIN 
+                    tipos_usuarios tu ON tu.id = u.tipo_usuario_id
+                WHERE 
+                    u.email = :email
+            ";
+            // Preparando a declaração
+            $stmt = $this->conn->prepare($query);
+            // Vinculando o parâmetro
+            $stmt->bindParam(':email', $email);
+            // Executando a consulta
+            $stmt->execute();
+            // Obtendo o resultado
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                return 'Usuário não encontrado.';
+            }
+
+            // Verificando a senha
+            if (password_verify($senha, $result['senha'])) {
+                return $result;
+            } else {
+                return 'Senha incorreta.';
+            }
+        } catch (PDOException $e) {
+            return 'Erro no login: ' . $e->getMessage();
+        }
+    }
+    
+    // Método para inserir um novo usuário
+    public function inserirUsuario($nome, $email, $senha)
     {
-        $this->db = Database::getInstance();
+        try {
+            $query =
+                "INSERT INTO usuarios (nome, email, senha, tipo_usuario_id) 
+            VALUES (:nome, :email, :senha, :tipo_usuario_id)";
+
+            $stmt = $this->conn->prepare($query);
+            // Hash da senha antes de armazenar no banco de dados
+            $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+            // Valor fixo para tipo_usuario_id
+            $tipoUsuarioId = 1;
+            // Bind dos parâmetros
+            $stmt->bindParam(':nome', $nome);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':senha', $senhaHash);
+            $stmt->bindParam(':tipo_usuario_id', $tipoUsuarioId);
+            // Executa a query
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            echo "Erro ao inserir usuário: " . $e->getMessage();
+            return false;
+        }
     }
 
     public function cadastrar($nome, $email, $senha)
@@ -21,79 +91,70 @@ class Usuario
         }
 
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-        $this->db->query("INSERT INTO usuarios (nome, email, senha, tipo_usuario_id) 
+        $this->conn->query("INSERT INTO usuarios (nome, email, senha, tipo_usuario_id) 
         VALUES (?, ?, ?, ?)", [$nome, $email, $senhaHash, 2]);
 
         return 'Usuário cadastrado com sucesso.';
     }
 
-    public function listar($limit = 10, $offset = 0) {
-        $sql = "SELECT u.id, u.nome, u.email, u.criado_em, u.ativo, tu.tipo 
-                FROM usuarios u
-                LEFT JOIN tipos_usuarios tu ON tu.id = u.tipo_usuario_id
-                LIMIT $limit OFFSET $offset";
-        $usuarios = $this->db->query($sql);
-        return $usuarios;
+    public function listar($limit = 10, $offset = 0)
+    {
+        try {
+            // SQL query para listar usuários com limite e deslocamento
+            $sql = "SELECT u.id, u.nome, u.email, u.criado_em, u.ativo, tu.tipo 
+                    FROM usuarios u
+                    LEFT JOIN tipos_usuarios tu ON tu.id = u.tipo_usuario_id
+                    ORDER BY u.id DESC
+                    LIMIT :limit OFFSET :offset";
+
+            // Preparar a declaração
+            $stmt = $this->conn->prepare($sql);
+
+            // Bind dos parâmetros
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+
+            // Executar a declaração
+            $stmt->execute();
+
+            // Obter os resultados
+            $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Retornar os resultados
+            return $usuarios;
+        } catch (PDOException $e) {
+            // Em caso de erro, exibir a mensagem de erro
+            echo "Erro ao listar usuários: " . $e->getMessage();
+            return false;
+        }
     }
+
 
     // Adicionar método para contar o número total de usuários
-    public function contarUsuarios() {
-        $sql = "SELECT COUNT(*) as total FROM usuarios";
-        $result = $this->db->query($sql);
-        return $result[0]['total'];
-    }
-
-
-
-    public function login($email, $senha) {
-        if (empty($email) || empty($senha)) {
-            return 'Por favor, preencha todos os campos.';
-        }
-
-        $result = $this->db->query(
-            "SELECT 
-                u.id, u.senha, u.tipo_usuario_id, u.nome, tu.tipo 
-                FROM usuarios u
-            LEFT JOIN tipos_usuarios tu ON tu.id = u.tipo_usuario_id
-            WHERE email = ?",
-            [$email]
-        );
-
-        if ($this->db->error() || empty($result)) {
-            return false;
-        }
-
-        $usuario = $result[0];
-
-        if (password_verify($senha, $usuario['senha'])) {
-            return $usuario;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function getBaseUrl()
+    public function contarUsuarios()
     {
-        // Verifica se o servidor está usando HTTPS
-        $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+        try {
+            // SQL query para contar o total de usuários
+            $sql = "SELECT COUNT(*) as total FROM usuarios";
 
-        // Monta o prefixo da URL baseado no protocolo e no host
-        $baseUrl = ($isHttps ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+            // Preparar a declaração
+            $stmt = $this->conn->prepare($sql);
 
-        // Adiciona a porta, se necessário
-        if ($_SERVER['SERVER_PORT'] !== '80' && $_SERVER['SERVER_PORT'] !== '443') {
-            $baseUrl .= ':' . $_SERVER['SERVER_PORT'];
+            // Executar a declaração
+            $stmt->execute();
+
+            // Obter o resultado
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Retornar o total de usuários
+            return $result['total'];
+        } catch (PDOException $e) {
+            // Em caso de erro, exibir a mensagem de erro
+            echo "Erro ao contar usuários: " . $e->getMessage();
+            return false;
         }
-
-        // Verifica se o servidor é localhost
-        if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_ADDR'] === '127.0.0.1') {
-            // Adiciona o nome do projeto ao URL base
-            $baseUrl .= '/basic-php_oo-vue';
-        }
-
-        return $baseUrl;
     }
+
     public function checkSocio()
     {
         $baseUrl = $this->getBaseUrl();

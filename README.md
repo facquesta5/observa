@@ -7,26 +7,11 @@ Para utilizar este projeto, certifique-se de ter os seguintes requisitos instala
 
 PHP 7.2.5 ou superior
 Composer
+PDO Extension
 
-projeto_oo/
-┣ classes/
-┃ ┣ Carro.php
-┃ ┣ Database.php
-┃ ┗ Usuario.php
-┣ functions/
-┃ ┗ helpers.php
-┣ public/
-┃ ┣ css/
-┃ ┣ images/
-┃ ┗ js/
-┣ vendor/
-┃ ┣ composer/
-┃ ┗ autoload.php
-┣ views/
-┃ ┣ footer.php
-┃ ┗ header.php
-┣ composer.json
-┣ file_tree.txt
-┣index.php
-┣usuario_cadastrar.php
-┗retorno_cadastrar.php
+Configurar: 
+
+Em classes >> Base
+$baseUrl .= '/basic-php_oo-vue-2';
+Em .htaccess
+RewriteRule ^(.*)$ /basic-php_oo-vue-2/views/404.php [QSA,L]

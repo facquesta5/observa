@@ -1,8 +1,10 @@
 <?php
 
 require '../../vendor/autoload.php';
+
 use App\Usuario;
 
+// Configura o cabeçalho HTTP para uma resposta JSON
 header('Content-Type: application/json');
 
 // Verifique se o método é POST
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $input['senha'];
     // Faça algo com os dados aqui, como inseri-los em um banco de dados
     $usuario = new Usuario();
-    $mensagem = $usuario->cadastrar($nome, $email, $senha);
+    $mensagem = $usuario->inserirUsuario($nome, $email, $senha);
     // Retorne uma resposta com os dados recebidos
     echo json_encode(['mensagem' => $mensagem]);
 } else {

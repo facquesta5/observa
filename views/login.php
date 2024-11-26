@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $usuarioObj = new Usuario();
     $usuario = $usuarioObj->login($email, $senha);
-    if ($usuario) {
+
+    if ($usuario && is_array($usuario)) {
         session_start();
         $_SESSION['nome'] = $usuario['nome'];
         $_SESSION['tipo'] = $usuario['tipo'];
@@ -41,33 +42,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php include 'navbar.php'; ?>
-    
-    <?php if ($error) : ?>
-        <div class="alert alert-danger"><?= $error ?></div>
-    <?php endif; ?>
+
+<div id="app">
     <div class="d-flex justify-content-center">
         <div class="login-form-wrapper">
-        <h2>Login</h2>
-            <form method="POST">
+            <h2>Login</h2>
+            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+            <form @submit.prevent="login">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" v-model="email" class="form-control" id="email" required>
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" required>
+                    <input type="password" v-model="senha" class="form-control" id="senha" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" :disabled="loading">Login</button>
             </form>
         </div>
     </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                email: '',
+                senha: '',
+                error: '',
+                loading: false
+            };
+        },
+        methods: {
+            login() {
+                this.loading = true;
+                axios.post('../api/login_api.php', {
+                        email: this.email,
+                        senha: this.senha
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            // Redireciona o usuário baseado no tipo de usuário
+                            window.location.href = response.data.redirect;
+                        } else {
+                            // Define a mensagem de erro vinda do backend
+                            this.error = response.data.message;
+                        }
+                    })
+                    .catch(error => {
+                        this.error = 'Erro ao realizar o login. Tente novamente.';
+                    })
+                    .finally(() => {
+                        this.loading = false;
+                    });
+            }
+        }
+    });
+</script>
 <?php include 'footer.php'; ?>
-
-<style>
-    .login-form-wrapper {
-        width: 100%;
-        max-width: 400px; /* Largura máxima */
-        padding: 15px;
-        margin: auto;
-    }
-</style>

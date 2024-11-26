@@ -21,7 +21,7 @@ $totalPages = ceil($totalUsuarios / $limit);
 <div class="container">
     <div class="row" style="justify-content: space-between; align-items: baseline; margin-right: 0px; margin-left: 0px;">
         <h5 style="width: fit-content;">Usuários</h5>
-        <a href="<?php echo $baseUrl; ?>/views/admin/usuario_cadastrar.php" class="btn btn-primary mb-2">Cadastrar Usuário</a>
+        <a href="<?php echo $baseUrl; ?>/views/admin/user_register.php" class="btn btn-primary mb-2">Cadastrar Usuário</a>
     </div>
     <table class="table table-hover">
         <thead>
